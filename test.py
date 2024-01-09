@@ -1,5 +1,5 @@
 import cx_Oracle
-import pickle
+import pandas as pd
 
 cx_Oracle.init_oracle_client(lib_dir=r"instantclient_21_9")
 
@@ -37,7 +37,7 @@ with open('database.txt', 'r', encoding='utf-8') as f:
 
 gdict = {}
 
-for connection in connections:
+for index, connection in enumerate(connections):
     data = None
     print(f"START PARSING: {connection['district']}")
     try:
@@ -48,7 +48,20 @@ for connection in connections:
         print(e)
     if data is None:
         continue
+    for column in columns:
+        gdict[f"{connection['district']} - {column}"] = list()
+    gdict[index * ' '] = list()
+    #gdict[connection['district']] = list()
+
     for row in data:
         for index, column in enumerate(columns):
-            if gdict[column + ] is not None:
-                gdict[column].append(column)
+            gdict[f"{connection['district']} - {column}"].append(row[index])
+
+
+    # for i in range(len(gdict[connection['district'] + column])):
+    #     gdict[connection['district']].append('')
+print(gdict)
+df = pd.DataFrame({k: pd.Series(v) for k, v in gdict.items()})
+print(df)
+
+df.to_excel('test.xlsx', index=False)
