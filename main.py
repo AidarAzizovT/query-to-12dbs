@@ -60,8 +60,8 @@ for index, connection in enumerate(connections):
 
     # for i in range(len(gdict[connection['district'] + column])):
     #     gdict[connection['district']].append('')
-print(gdict)
+
 df = pd.DataFrame({k: pd.Series(v) for k, v in gdict.items()})
-print(df)
+
 
 df.to_excel('test.xlsx', index=False)

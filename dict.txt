@@ -1,0 +1,4 @@
+select
+max(LENGTH(SCD$ADDR_ACT.del_reason))
+from SCD$ADDR_ACT
+where SCD$ADDR_ACT.del_reason is not null
